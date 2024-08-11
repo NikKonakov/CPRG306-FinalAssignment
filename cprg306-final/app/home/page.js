@@ -11,7 +11,7 @@ export default function Page(){
                 </div>
                 <div className="bg-lime-50 basis-12 m-4 border-2 border-gray-600 rounded-lg p-4 shadow-sm shadow-gray-600">
                     <div>
-                        <p className="text-xl font-medium ml-1 mt-1">Seleced Year: 2024</p> {/*Select year dropdown menu will be here */}
+                        <p className="text-xl font-medium ml-1 mt-1">Selected Year: 2024</p> {/*Select year dropdown menu will be here */}
                         <div>
                             <p className="text-lg mt-4 ml-4">Records:</p>
                             <div className="flex">
@@ -27,25 +27,25 @@ export default function Page(){
                         <div>
                             <p className="text-lg mt-4 ml-4">Calculate:</p>
                             <form className="my-1" action="">
-                                <label>Average montly income for</label>
+                                <label>Average monthly income for</label>
                                 <input className="border-2 border-gray-500 rounded-md mx-1 bg-gray-50" type="number" id="AveMonthIncome" defaultValue="1" min="1" max="12"/>
                                 <label>months</label>
                                 <input className="mx-2 border-2 border-gray-500 rounded-lg px-0.5 bg-gray-50 shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping hover:cursor-pointer" type="button" value="Submit" />
                             </form>
                             <form className="my-1" action="">
-                                <label>Average montly expenses for</label>
+                                <label>Average monthly expenses for</label>
                                 <input className="border-2 border-gray-500 rounded-md mx-1 bg-gray-50" type="number" id="AveMonthExpences"  defaultValue="1" min="1" max="12"/>
                                 <label>months</label>
                                 <input className="mx-2 border-2 border-gray-500 rounded-lg px-0.5 bg-gray-50 shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping hover:cursor-pointer" type="button" value="Submit" />
                             </form>
                             <form className="my-1" action="">
-                                <label>Average montly debt for</label>
+                                <label>Average monthly debt for</label>
                                 <input className="border-2 border-gray-500 rounded-md mx-1 bg-gray-50" type="number" id="AveMonthDebt" defaultValue="1" min="1" max="12"/>
                                 <label>months</label>
                                 <input className="mx-2 border-2 border-gray-500 rounded-lg px-0.5 bg-gray-50 shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping hover:cursor-pointer" type="button" value="Submit" />
                             </form>
                             <form className="my-1" action="">
-                                <label>Average montly savings for</label>
+                                <label>Average monthly savings for</label>
                                 <input className="border-2 border-gray-500 rounded-md mx-1 bg-gray-50" type="number" id="AveMonthSavings" defaultValue="1" min="1" max="12"/>
                                 <label>months</label>
                                 <input className="mx-2 border-2 border-gray-500 rounded-lg px-0.5 bg-gray-50 shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping hover:cursor-pointer" type="button" value="Submit" />
