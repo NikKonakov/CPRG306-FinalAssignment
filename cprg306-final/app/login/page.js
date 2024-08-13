@@ -1,7 +1,6 @@
 "use client";
 
 import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../_utils/firebaseConfig"; 
 import { useRouter } from "next/navigation";
 
 export default function Page() {
