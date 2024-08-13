@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, query, getDocs } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useState, useEffect, useContext, createContext } from 'react';
 
@@ -15,7 +14,6 @@ const firebaseConfig = {
   };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -44,6 +42,18 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
     return useContext(AuthContext);
 };
+
+
+export const checkAndAddUser = async () => {
+    // const q = query(collection(db, "Users"), where("Email", "==", user.email));
+    // const querySnapshot = await getDocs(q);
+    // console.log("Started checkAndAddUser function")
+    // if(querySnapshot.exists()){
+    // querySnapshot.forEach((doc) => {
+    //     console.log(doc)
+    // });
+    }
+
 
 export const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();

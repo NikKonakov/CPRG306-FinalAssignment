@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../_utils/firebaseConfig';
 import { getMonthData } from '../_utils/firestoreService';
 
+
 export default function HomePage() {
     const [totalExpenses, setTotalExpenses] = useState(0);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [editMode, setEditMode] = useState(false);
     const [newRecordMode, setNewRecordMode] = useState(false);
     const [recordData, setRecordData] = useState({ month: '', income: '', expenses: '' });
+    const [selectedOption, setSelectedOption] = useState(null)
 
     const { user } = useAuth();
 
@@ -42,6 +44,8 @@ export default function HomePage() {
 
     function handleAddRecord() {
         setNewRecordMode(true);
+        console.log(`Month:${recordData.month}; Income:${recordData.income}; Expenses:${recordData.expenses}`)
+
         setRecordData({ month: '', income: '', expenses: '' });
     }
 
@@ -50,19 +54,22 @@ export default function HomePage() {
         setNewRecordMode(false);
     }
 
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+    }
+
     return (
         <div className="flex flex-col justify-center items-center flex-wrap h-screen bg-gray-100">
-            <h1 className="text-4xl font-bold mb-4">Welcome back, {user?.firstName}!</h1>
+            <h1 className="text-4xl font-bold mb-4">Welcome back, {user?.displayName}!</h1>
             <p className="text-2xl mb-6">Your expenses for last month: ${totalExpenses}</p>
             <div className="w-full max-w-2xl">
                 <label className="block text-lg mb-2">
-                    Selected Year:
-                    <input
-                        type="number"
-                        value={selectedYear}
-                        onChange={handleYearChange}
-                        className="w-full mt-2 p-2 border rounded"
-                    />
+                    Selected Year: <select onChange={handleOptionChange} className="w-full mt-2 p-2 border rounded">
+                    <option disabled value="" className="w-full mt-2 p-2 border rounded">Select Year</option>
+                    <option onChange={handleOptionChange} className="w-full mt-2 p-2 border rounded"></option>
+                    </select>
+                    <button onClick={()=>(console.log(user))}>Log User</button><br></br>
+                    <button onClick={()=>(console.log(selectedYear))}>Log Year</button>
                 </label>
                 {editMode ? (
                     <div className="mt-4">
@@ -126,7 +133,7 @@ export default function HomePage() {
                     </div>
                 ) : (
                     <button
-                        onClick={handleAddRecord}
+                        onClick={()=>(handleAddRecord())}
                         className="bg-gray-700 text-white p-2 rounded mt-4"
                     >
                         Add a new record

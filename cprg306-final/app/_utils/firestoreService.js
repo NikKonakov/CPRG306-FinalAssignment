@@ -4,10 +4,17 @@ import { collection, getDocs, getDoc, setDoc, addDoc, query } from "firebase/fir
 // Get all months for a specific year of a user
 export const getMonths = async (userId, yearId) => {
     const monthsRef = collection(db, 'Users', userId, 'Year', yearId, 'Month');
-    const q = query(monthsRef);
-    const querySnapshot = await getDocs(q);
-    const months = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    return months;
+    const monthSnap = await getDoc(monthsRef)
+
+    if(monthSnap.exists()){
+        const q = query(monthsRef);
+        const querySnapshot = await getDocs(q);
+        const months = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        return months;
+    }else{
+        console.log("No Months data has found")
+    }
+    
 };
 
 // Get specific month data for a user and year
@@ -19,6 +26,10 @@ export const getMonthData = async (userId, yearId, monthId) => {
     }
     return null;
 };
+
+export const getYears = async (userId) => {
+    
+}
 
 // Constructor for userData
 export const createUserData = (access, subscriptionStatus) => {
@@ -36,6 +47,7 @@ export const addUser = async (userId, userData) => {
     await setDoc(userRef, userData);
     return userRef.id;
 };
+
 
 // Add a new year document for a specific user
 export const addYear = async (userId, yearId, yearData) => {
