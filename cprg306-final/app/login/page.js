@@ -2,6 +2,7 @@
 
 import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { auth } from "../_utils/firebaseConfig"; 
 
 export default function Page() {
     const router = useRouter();
