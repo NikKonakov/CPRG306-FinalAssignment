@@ -1,137 +1,58 @@
-"use client";
-
-import { useEffect, useState } from 'react';
-import { useAuth } from '../_utils/firebaseConfig';
-import { getMonthData } from '../_utils/firestoreService';
-
-export default function HomePage() {
-    const [totalExpenses, setTotalExpenses] = useState(0);
-    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-    const [editMode, setEditMode] = useState(false);
-    const [newRecordMode, setNewRecordMode] = useState(false);
-    const [recordData, setRecordData] = useState({ month: '', income: '', expenses: '' });
-
-    const { user } = useAuth();
-
-    useEffect(() => {
-        if (user) {
-            async function fetchExpenses() {
-                const currentMonth = new Date().getMonth() + 1;
-                const yearId = new Date().getFullYear();
-                const expenses = await getMonthData(user.uid, yearId, currentMonth);
-                setTotalExpenses(expenses?.total || 0);
-            }
-            fetchExpenses();
-        }
-    }, [user]);
-
-    function handleYearChange(e) {
-        setSelectedYear(e.target.value);
-        // Fetch data for the selected year
-    }
-
-    function handleEdit(recordId) {
-        setEditMode(true);
-        // Fetch and populate fields with the current record data
-    }
-
-    function handleSave() {
-        // Save the updated data to Firestore
-        setEditMode(false);
-    }
-
-    function handleAddRecord() {
-        setNewRecordMode(true);
-        setRecordData({ month: '', income: '', expenses: '' });
-    }
-
-    function handleSaveNewRecord() {
-        // Save the new record to Firestore
-        setNewRecordMode(false);
-    }
-
-    return (
-        <div className="flex flex-col justify-center items-center flex-wrap h-screen bg-gray-100">
-            <h1 className="text-4xl font-bold mb-4">Welcome back, {user?.firstName}!</h1>
-            <p className="text-2xl mb-6">Your expenses for last month: ${totalExpenses}</p>
-            <div className="w-full max-w-2xl">
-                <label className="block text-lg mb-2">
-                    Selected Year:
-                    <input
-                        type="number"
-                        value={selectedYear}
-                        onChange={handleYearChange}
-                        className="w-full mt-2 p-2 border rounded"
-                    />
-                </label>
-                {editMode ? (
-                    <div className="mt-4">
-                        <label className="block text-lg mb-2">Month:</label>
-                        <input
-                            type="text"
-                            value={recordData.month}
-                            onChange={(e) => setRecordData({ ...recordData, month: e.target.value })}
-                            className="w-full mt-2 p-2 border rounded"
-                        />
-                        <label className="block text-lg mb-2">Income:</label>
-                        <input
-                            type="number"
-                            value={recordData.income}
-                            onChange={(e) => setRecordData({ ...recordData, income: e.target.value })}
-                            className="w-full mt-2 p-2 border rounded"
-                        />
-                        <label className="block text-lg mb-2">Expenses:</label>
-                        <input
-                            type="number"
-                            value={recordData.expenses}
-                            onChange={(e) => setRecordData({ ...recordData, expenses: e.target.value })}
-                            className="w-full mt-2 p-2 border rounded"
-                        />
-                        <button
-                            onClick={handleSave}
-                            className="bg-blue-500 text-white p-2 rounded mt-4"
-                        >
-                            Save
-                        </button>
+`use client`
+export default function Page(){
+    return(
+        <div className="flex flex-col justify-center items-center flex-wrap h-screen">
+                <p className="text-5xl font-mono p-4 text-white">ABC App</p>
+            <div className="border-2 mb-32 rounded-lg bg-white">
+                <div className="bg-lime-50 basis-12 m-4 border-2 border-gray-600 rounded-lg p-4 shadow-sm shadow-gray-600">
+                    <p className="text-xl font-mono">Welcome back, User!</p>
+                    <p className="mt-2 font-light">Your current subscription: BASIC</p>
+                    <p className="font-light">Your expenses for last month: 5412$</p>
+                </div>
+                <div className="bg-lime-50 basis-12 m-4 border-2 border-gray-600 rounded-lg p-4 shadow-sm shadow-gray-600">
+                    <div>
+                        <p className="text-xl font-medium ml-1 mt-1">Selected Year: 2024</p> {/*Select year dropdown menu will be here */}
+                        <div>
+                            <p className="text-lg mt-4 ml-4">Records:</p>
+                            <div className="flex">
+                                <p className=" font-serif m-0.5">May - Income: 20.000; Expenses: 19.500; Saved: 500$;</p>
+                                <input className="border-2 border-gray-700 shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping rounded-lg self-start px-0.5 font-serif ml-1 bg-white hover:cursor-pointer" type="button" value="Edit"></input>
+                            </div>
+                            <div className="flex">
+                                <p className=" font-serif m-0.5">June - Income: 16.500; Expenses: 24.000; Debt: 7.500$ - 500$;</p>
+                                <input className="border-2 border-gray-700 rounded-lg self-start px-0.5 font-serif ml-1 bg-white shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping hover:cursor-pointer" type="button" value="Edit"></input>
+                            </div>
+                            <button className="border-2 rounded-lg px-1 border-gray-600 mx-48 mt-4 font-mono text-md bg-white shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping">Add a new record</button>
+                        </div>
+                        <div>
+                            <p className="text-lg mt-4 ml-4">Calculate:</p>
+                            <form className="my-1" action="">
+                                <label>Average monthly income for</label>
+                                <input className="border-2 border-gray-500 rounded-md mx-1 bg-gray-50" type="number" id="AveMonthIncome" defaultValue="1" min="1" max="12"/>
+                                <label>months</label>
+                                <input className="mx-2 border-2 border-gray-500 rounded-lg px-0.5 bg-gray-50 shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping hover:cursor-pointer" type="button" value="Submit" />
+                            </form>
+                            <form className="my-1" action="">
+                                <label>Average monthly expenses for</label>
+                                <input className="border-2 border-gray-500 rounded-md mx-1 bg-gray-50" type="number" id="AveMonthExpences"  defaultValue="1" min="1" max="12"/>
+                                <label>months</label>
+                                <input className="mx-2 border-2 border-gray-500 rounded-lg px-0.5 bg-gray-50 shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping hover:cursor-pointer" type="button" value="Submit" />
+                            </form>
+                            <form className="my-1" action="">
+                                <label>Average monthly debt for</label>
+                                <input className="border-2 border-gray-500 rounded-md mx-1 bg-gray-50" type="number" id="AveMonthDebt" defaultValue="1" min="1" max="12"/>
+                                <label>months</label>
+                                <input className="mx-2 border-2 border-gray-500 rounded-lg px-0.5 bg-gray-50 shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping hover:cursor-pointer" type="button" value="Submit" />
+                            </form>
+                            <form className="my-1" action="">
+                                <label>Average monthly savings for</label>
+                                <input className="border-2 border-gray-500 rounded-md mx-1 bg-gray-50" type="number" id="AveMonthSavings" defaultValue="1" min="1" max="12"/>
+                                <label>months</label>
+                                <input className="mx-2 border-2 border-gray-500 rounded-lg px-0.5 bg-gray-50 shadow-sm shadow-gray-600 hover:shadow hover:shadow-black active:animate-ping hover:cursor-pointer" type="button" value="Submit" />
+                            </form>
+                        </div>
                     </div>
-                ) : newRecordMode ? (
-                    <div className="mt-4">
-                        <label className="block text-lg mb-2">Month:</label>
-                        <input
-                            type="text"
-                            value={recordData.month}
-                            onChange={(e) => setRecordData({ ...recordData, month: e.target.value })}
-                            className="w-full mt-2 p-2 border rounded"
-                        />
-                        <label className="block text-lg mb-2">Income:</label>
-                        <input
-                            type="number"
-                            value={recordData.income}
-                            onChange={(e) => setRecordData({ ...recordData, income: e.target.value })}
-                            className="w-full mt-2 p-2 border rounded"
-                        />
-                        <label className="block text-lg mb-2">Expenses:</label>
-                        <input
-                            type="number"
-                            value={recordData.expenses}
-                            onChange={(e) => setRecordData({ ...recordData, expenses: e.target.value })}
-                            className="w-full mt-2 p-2 border rounded"
-                        />
-                        <button
-                            onClick={handleSaveNewRecord}
-                            className="bg-green-500 text-white p-2 rounded mt-4"
-                        >
-                            Save
-                        </button>
-                    </div>
-                ) : (
-                    <button
-                        onClick={handleAddRecord}
-                        className="bg-gray-700 text-white p-2 rounded mt-4"
-                    >
-                        Add a new record
-                    </button>
-                )}
+                </div>
             </div>
         </div>
     );
